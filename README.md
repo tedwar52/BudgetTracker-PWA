@@ -15,4 +15,4 @@ When a user enters a transaction while offline,
 The transaction will be saved until online, where it will be added to their transaction history
 --insert pictures--
 
-This app is deployed on Heroku here:
+This app is deployed on Heroku here: https://floating-wave-80922.herokuapp.com/
