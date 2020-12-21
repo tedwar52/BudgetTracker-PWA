@@ -1,7 +1,7 @@
 console.log("yes this is working")
 
 const CACHE_NAME = "practice-cache";
-const DATA_CACHE_NAME = "info-cache";
+const DATA_CACHE = "info-cache";
 const FILES_TO_CACHE = [
     "/",
     "/index.js",
@@ -14,7 +14,7 @@ const FILES_TO_CACHE = [
 
 self.addEventListener("install", function (evt) {
     evt.waitUntil(
-        caches.open(DATA_CACHE_NAME).then((cache) => cache.add("/api/transaction"))
+        caches.open(DATA_CACHE).then((cache) => cache.add("/api/transaction"))
     );
 
     evt.waitUntil(
@@ -29,7 +29,7 @@ self.addEventListener("activate", function(evt) {
         caches.keys().then(keyList => {
             return Promise.all(
                 keyList.map(key => {
-                    if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
+                    if (key !== CACHE_NAME && key !== DATA_CACHE) {
                         console.log("Removing old cache information", key);
                         return caches.delete(key);
                     }
@@ -45,7 +45,7 @@ self.addEventListener("fetch", function(evt) {
     if (evt.request.url.includes("/api/")) {
         console.log("[Service Worker] Fetch (data)", evt.request.url);
         evt.respondWith(
-            caches.open(DATA_CACHE_NAME).then(cache => {
+            caches.open(DATA_CACHE).then(cache => {
                 return fetch(evt.request)
                 .then(response => {
                     if (response.status === 200) {
